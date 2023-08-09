@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\QueryBuilders\QueryBuilder;
+use App\Services\GetUserListsService;
+use App\QueryBuilders\TagQueryBuilder;
+use App\QueryBuilders\ListQueryBuilder;
+use App\QueryBuilders\UserQueryBuilder;
 use Illuminate\Support\ServiceProvider;
+use App\QueryBuilders\PointQueryBuilder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +19,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(QueryBuilder::class, UserQueryBuilder::class);
+        $this->app->bind(QueryBuilder::class, ListQueryBuilder::class);
+        $this->app->bind(QueryBuilder::class, TagQueryBuilder::class);
+        $this->app->bind(QueryBuilder::class, PointQueryBuilder::class);
+
+
+        //Services
+
+        $this->app->bind(GetUserListsService::class);
     }
 
     /**
