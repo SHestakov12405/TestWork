@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Todo\TodoController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SessionSaveController;
+use App\Http\Controllers\Todo\TodoUsersController;
+use App\Http\Controllers\Todo\EditsUsersController;
 use App\Http\Controllers\Account\IndexController as AccountController;
 
 /*
@@ -15,14 +20,24 @@ use App\Http\Controllers\Account\IndexController as AccountController;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.main');
-});
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/logout', [LoginController::class, 'logout'])->name('account.logout');
+
+    Route::resource('users', TodoUsersController::class);
+
     Route::get('/account', AccountController::class)->name('account');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('todo', TodoController::class);
+
+
+    Route::middleware(['isEntitlements'])->group(function () {
+
+        Route::get('/edits/save', SessionSaveController::class)->name('session.save');
+        Route::resource('edits', EditsUsersController::class);
+
+    });
 });
 
 Auth::routes();

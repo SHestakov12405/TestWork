@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\ListPointsService;
 use App\QueryBuilders\QueryBuilder;
+use Illuminate\Pagination\Paginator;
 use App\Services\GetUserListsService;
 use App\QueryBuilders\TagQueryBuilder;
 use App\QueryBuilders\ListQueryBuilder;
@@ -28,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
         //Services
 
         $this->app->bind(GetUserListsService::class);
+        $this->app->bind(ListPointsService::class);
+
     }
 
     /**
@@ -37,6 +41,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Paginator::useBootstrapFour();
     }
 }

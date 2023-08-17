@@ -2,35 +2,28 @@
 
 namespace App\Http\Controllers\Todo;
 
-use App\Models\User;
-use App\Models\TagPoint;
 use App\Models\UserList;
-use App\Models\PointList;
 use Illuminate\Http\Request;
 use App\Services\ListPointsService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Validator;
-use App\Services\GetUserListsService;
 use App\QueryBuilders\ListQueryBuilder;
 use App\QueryBuilders\UserQueryBuilder;
 
-class TodoController extends Controller
+class EditsUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(GetUserListsService $getUserListsService, ListQueryBuilder $listQuerybuilder, UserQueryBuilder $userQueryBuilder)
+    public function index(UserQueryBuilder $userQueryBuilder)
     {
-        // dd(Auth::user()->user_list()->get());
-        $userLists = $getUserListsService->getUserLists();
-
-        return view('todo.todo', [
-            'lists' => Auth::user()->user_list()->paginate()
+        $user = $userQueryBuilder->getOne(session('userEntitlementsId'))->first();
+        return \view('todo.usersList.usersIndex', [
+            'lists' => $user->user_list()->paginate(),
+            'name' => $user->name,
+            'userId' => $user->id
         ]);
-
     }
 
     /**
@@ -38,10 +31,13 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('todo.todoCreate');
-
+        // dd(session('userEntitlementsId'));
+        if ($request->session()->has('userEntitlementsId')) {
+            return \view('todo.usersList.usersCreate');
+        }
+        return redirect()->route('users.index');
     }
 
     /**
@@ -52,9 +48,8 @@ class TodoController extends Controller
      */
     public function store(Request $request, UserList $userList, ListPointsService $listPoints)
     {
-
         $userList->name = $request->input('list');
-        $userList->user()->associate(Auth::user()->id);
+        $userList->user()->associate(session('userEntitlementsId'));
         if ($userList->save()) {
 
             $listPoints->pointsAndTagCreate($userList->id, $request->input('point'));
@@ -63,10 +58,6 @@ class TodoController extends Controller
         }else{
             return response()->json(['ok'=>'false']);
         }
-
-
-
-
     }
 
     /**
@@ -75,10 +66,9 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id, Request $request)
     {
-
-
+        //
     }
 
     /**
@@ -87,12 +77,15 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, ListQueryBuilder $listQueryBuilder)
+    public function edit($id, Request $request, ListQueryBuilder $listQueryBuilder)
     {
+        if ($request->session()->has('userEntitlementsId')) {
+            return  \view('todo.usersList.usersEdit', [
+                'list' => $listQueryBuilder->getOne($id)->first()
+            ]);
+        }
+        return redirect()->route('users.index');
 
-        return  \view('todo.todoUpdate', [
-            'list' => $listQueryBuilder->getOne($id)->first()
-        ]);
     }
 
     /**
@@ -104,13 +97,12 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id, ListQueryBuilder $listQueryBuilder, ListPointsService $listPoints)
     {
-        // dd($request);
-        dd('todo');
+
         $list = $listQueryBuilder->getOne($id)->first();
         $listPoints->pointsDelete($list);
 
         $list->name = $request->input('list');
-        $list->user()->associate(Auth::user()->id);
+        $list->user()->associate(session('userEntitlementsId'));
 
         if ($list->save()) {
 
@@ -120,7 +112,7 @@ class TodoController extends Controller
 
 
 
-        return redirect()->route('todo.index');
+        return redirect()->route('edits.index');
     }
 
     /**
@@ -129,7 +121,7 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, ListQueryBuilder $listQueryBuilder)
+    public function destroy($id, Request $request, ListQueryBuilder $listQueryBuilder)
     {
         $list = $listQueryBuilder->getOne($id)->first();
         $list->delete();

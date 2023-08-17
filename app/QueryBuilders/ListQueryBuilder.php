@@ -21,7 +21,7 @@ final class ListQueryBuilder extends QueryBuilder {
 
     public function getPagination(int $quan=10)
     {
-        return $this->model->paginate($quan);
+        return $this->model->with('points')->paginate($quan);
     }
 
     public function getOne(int $id)

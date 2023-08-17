@@ -13,6 +13,10 @@ class UserList extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'name'
+    ];
     /**
      * Get the user that owns the UserList
      *

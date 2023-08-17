@@ -1,6 +1,6 @@
 @extends('layouts.main')
 <?php
-    // dd($lists);
+    // dd($userId);
 ?>
 @section('content')
 
@@ -204,7 +204,7 @@
 
 
         $.ajax({
-            url: "{{route('todo.store')}}",
+            url: "{{route('edits.store')}}",
             type: 'POST',
             data: {
             _token: $("input[name='_token']").val(),

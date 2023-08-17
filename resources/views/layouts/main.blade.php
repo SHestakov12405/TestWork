@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="vendor/mark.js/dist/mark.min.js"></script>
     <title>Document</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
@@ -28,16 +29,25 @@
                         <nav class="navbar navbar-expand-md navbar-light absolute-top">
                             <a class="navbar-brand mx-auto order-1 order-md-3" href="">TestWork</a>
 
-                            <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                <a class="nav-link" href="{{route('todo.index')}}">Мои списки</a>
+
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupporte" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse order-4 order-md-4"  id="navbarSupporte">
+
+                            <ul class="dropdown navbar-nav ms-auto">
+                                <li class="nav-item" >
+                                    <a class="nav-link" href="{{route('todo.index')}}">Мои списки</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('todo.create')}}">Создать список</a>
-                                    </li>
+                                </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="">Профиль</a>
+                                    <a class="nav-link" href="{{route('account')}}">Профиль</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('users.index')}}">Другие пользователи</a>
                                 </li>
                             </ul>
                             </div>
