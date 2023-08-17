@@ -13,7 +13,9 @@ class PointList extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [
+        'text'
+    ];
     /**
      * Get the user that owns the PointList
      *

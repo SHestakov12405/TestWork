@@ -3,16 +3,18 @@
     // dd($lists);
 ?>
 @section('content')
+    <h1>Листы {{$name}}</h1>
     @empty($lists)
         <h1>Листов пока нет!</h1>
     @endempty
 
-
     <div class="input-group mt-4">
         <div class="form-outline">
           <input type="search" id="searchInput" class="form-control" placeholder="Поиск по тегу"/>
+          <a href="{{route('edits.create')}}" class="btn btn-primary mt-2">Создать лист пользователю</a>
         </div>
     </div>
+
 
 
     <div id="allList" class="list-group mt-2 mb-2">
@@ -22,7 +24,7 @@
 
 
 
-            <a href="{{ route('todo.edit', $list['id']) }}" id='{{$list['id']}}' class="list-group-item list-group-item-action oneList mt-5 border p-2" aria-current="true">
+            <a href="{{ route('edits.edit', $list['id']) }}" id='{{$list['id']}}' class="list-group-item list-group-item-action oneList mt-5 border p-2" aria-current="true">
                 <div class="listItem d-flex w-100 justify-content-between">
                     <h5 class="mb-1 pl-3">{{$list['name']}}</h5>
                     <small>{{substr($list['created_at'], 0, 10)}}</small>
@@ -79,7 +81,7 @@
 
 
                 $.ajax({
-                url: `/todo/${listId}`,
+                url: `/edits/${listId}`,
                 type: 'DELETE',
                 data: {
                 _token: $("input[name='_token']").val(),
@@ -100,5 +102,7 @@
       });
     }, false);
 </script>
+
+
 
 

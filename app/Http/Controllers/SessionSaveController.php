@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Account;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\Auth;
 
-class IndexController extends Controller
+class SessionSaveController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,6 +14,6 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('todo.account');
+        return redirect()->route('edits.index');
     }
 }
