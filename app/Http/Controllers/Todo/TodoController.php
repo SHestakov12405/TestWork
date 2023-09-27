@@ -104,8 +104,7 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id, ListQueryBuilder $listQueryBuilder, ListPointsService $listPoints)
     {
-        // dd($request);
-        dd('todo');
+
         $list = $listQueryBuilder->getOne($id)->first();
         $listPoints->pointsDelete($list);
 

@@ -29,10 +29,14 @@
                 </div>
                 {{-- @foreach ($list as $keyP => $point) --}}
                     @foreach ($list->points as $point)
-                        <p class="listItem mb-1 pl-5 mt-4">{{$point['text']}}</p>
+                        <ul class="listItem mb-1 pl-5 mt-4 pe-0">
+                            <li>{{$point['text']}}</li>
+                            <ul class="listItem tagItem pl-5 ml-4">
                         @foreach ($point->tags as $tag)
-                            <small class="listItem tagItem pl-5 ml-4">{{$tag['name']}}</small><br/>
+                                <li>{{$tag['name']}}<br/></li>
                         @endforeach
+                            </ul>
+                        </ul>
                     @endforeach
                     {{-- @if (array_key_exists('tags', $point))
                         @foreach ($point['tags'] as $tag)
@@ -100,5 +104,6 @@
       });
     }, false);
 </script>
+
 
 
