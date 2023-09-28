@@ -20,6 +20,10 @@ use App\Http\Controllers\Account\IndexController as AccountController;
 |
 */
 
+Route::get('/', function()
+{
+    return redirect()->route('login');
+});
 
 Route::middleware(['auth'])->group(function () {
 

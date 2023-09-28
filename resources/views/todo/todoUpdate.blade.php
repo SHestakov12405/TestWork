@@ -26,7 +26,8 @@
     <div class="alert d-none alert-danger mt-2 alert-no" role="alert">
 
     </div>
-    <form class="formList" method="post" enctype="multipart/form-data" action="{{route('todo.update', $list->id)}}">
+
+    <form class="formList shadow-sm p-3 mb-5 bg-body rounded mt-3" method="post" enctype="multipart/form-data" action="{{route('todo.update', $list->id)}}">
 
         @csrf
         @method('put')

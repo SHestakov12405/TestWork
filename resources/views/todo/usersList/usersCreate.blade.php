@@ -10,14 +10,14 @@
         Подождите, лист создаеться...
     </div>
 
-    <form class="formList" enctype="multipart/form-data">
+    <form class="formList shadow-sm p-3 mb-5 bg-body rounded mt-3" enctype="multipart/form-data">
         @csrf
         <div class="formLitsInput">
             <input class="form-control mt-2" required name="list" type="text" id="list" placeholder="Ведите название листа">
                 <button type="submit" class="addPoint btn border mb-2">Добавить поинт</button>
             <div class="point0">
                 <input class="point form-control mt-3" required name="point"  type="text" id="point0" placeholder="Ведите название поинта">
-                <input class="pointImage form-control mt-3" required name="point0"  type="file" id="pointImage0">
+                {{-- <input class="pointImage form-control mt-3" required name="point0"  type="file" id="pointImage0"> --}}
                 <button type="submit" class="addTag btn border mb-2">Добавить тег</button><button type="submit" class="deletePoint btn border mb-2">Удалить поинт</button>
                 <div class="tag0">
                     <input class="form-control" name="point0" type="text" id="tag0" placeholder="Ведите название тега">
